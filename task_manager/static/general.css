@@ -1,0 +1,318 @@
+/* ============================================================
+   Task Manager – stylesheet
+   ============================================================ */
+
+:root {
+    /* Original palette, kept for compatibility */
+    --color0: #FEFEFF;
+    --color1: #d4d4d4;
+    --color2: #D6CFFF;
+    --color3: #000000;
+    --color4: #ABA0F9;
+
+    /* Extended palette */
+    --color4-dark: #8f7ff2;
+    --color4-light: #f1eeff;
+    --text: #1f1f24;
+    --text-muted: #5b5b66;
+    --border: #dcdce3;
+    --surface: #ffffff;
+    --danger: #e0575c;
+    --success: #3fae6a;
+
+    /* Spacing / shape scale */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --shadow-sm: 0 1px 3px rgba(20, 20, 30, 0.08);
+    --shadow-md: 0 6px 20px rgba(20, 20, 30, 0.10);
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2.5rem;
+}
+
+/* ---------- Reset & base ---------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color0);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+}
+
+h1, h2, h3 {
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h1 { font-size: 1.6rem; margin: var(--space-3) 0 var(--space-2); }
+h2 { font-size: 1.2rem; margin: var(--space-3) 0 var(--space-1); color: var(--text-muted); }
+
+p { color: var(--text-muted); }
+
+a {
+    color: var(--color4-dark);
+    text-decoration: none;
+}
+a:hover, a:focus-visible {
+    text-decoration: underline;
+}
+
+ul {
+    padding-left: 1.2rem;
+    margin: var(--space-1) 0;
+}
+li {
+    margin-bottom: 0.25rem;
+}
+
+/* ---------- Layout ---------- */
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-2) var(--space-4);
+}
+
+body > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* ---------- Header / nav ---------- */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    color: var(--color3);
+    background-color: var(--color4);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+}
+
+.header_text {
+    margin: 1% 3%;
+}
+
+header a {
+    color: var(--color3);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+header nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: var(--space-1) var(--space-2);
+    gap: var(--space-1);
+    align-items: center;
+    justify-content: center;
+    border-style: hidden;
+    text-align: center;
+}
+
+.buttonBar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.buttonBar:hover,
+.buttonBar:focus-visible {
+    background-color: rgba(255, 255, 255, 0.45);
+    text-decoration: none;
+}
+
+.buttonBar:active {
+    transform: scale(0.97);
+}
+
+/* ---------- Page-level action links (create / delete shortcuts) ---------- */
+.page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+}
+
+.page-actions a {
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-sm);
+    background-color: var(--color4-light);
+    font-weight: 500;
+}
+.page-actions a:hover {
+    background-color: var(--color2);
+    text-decoration: none;
+}
+
+/* ---------- Forms ---------- */
+form {
+    background-color: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+    width: auto;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    max-width: 460px;
+    margin: var(--space-4) auto;
+}
+
+form p {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin: 0 0 var(--space-2);
+    color: var(--text);
+}
+
+form label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="number"],
+form input[type="date"],
+form select,
+form textarea {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: var(--color0);
+    color: var(--text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--color4-dark);
+    box-shadow: 0 0 0 3px var(--color4-light);
+}
+
+form input[type="submit"] {
+    align-self: center;
+    margin-top: var(--space-1);
+    padding: 0.65rem 1.75rem;
+    border: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--color4-dark);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #7a67ef;
+}
+form input[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+form ul.errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.5rem;
+    color: var(--danger);
+    font-size: 0.85rem;
+}
+
+/* ---------- Card list (tasks / teams) ---------- */
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card > div {
+    margin-bottom: 0.35rem;
+    color: var(--text);
+}
+.card > div:last-child {
+    margin-bottom: 0;
+}
+
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: var(--space-1);
+    padding-top: var(--space-1);
+    border-top: 1px dashed var(--border);
+}
+
+.card-actions a {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* ---------- Info panels (user profile, etc.) ---------- */
+.panel {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-2);
+}
+
+.panel h1 {
+    margin-top: 0;
+}
+
+/* ---------- Responsive tweaks ---------- */
+@media (max-width: 600px) {
+    header nav {
+        justify-content: flex-start;
+    }
+    form {
+        margin: var(--space-2);
+        padding: var(--space-2);
+    }
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Tasks manager</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/sign_out" class="buttonBar">Se déconnecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+				<a href="/teams" class="buttonBar">Equipes</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<div class="page-actions">
+					<a href="/teams/create_teams">Création d'une nouvelle équipe</a>
+				</div>
+				<h1>
+					Equipes existantes :
+				</h1>
+				<div class="card-list">
+					{% for team in Teams %}
+					<div class="card">
+						<div>Nom de l'équipe : {{ team.0.name }}</div>
+						<div>Créée par : <a href="{% url 'users' team.0.createdBy.id %}">{{ team.0.createdBy }}</a></div>
+						<div class="card-actions">
+							{% if team.1 == True %}<a href="{% url 'join_teams' team.0.name %}">Rejoindre</a>{% else %}<a href="{% url 'leave_teams' team.0.name %}">Quitter</a>{% endif %}
+							{% if team.2 == True %} <a href="{% url 'delete_teams' team.0.name %}">Supprimer l'équipe</a> {% endif %}
+							<a href="{% url 'team_inspect' team.0.name %}">Voir l'équipe</a>
+						</div>
+					</div>
+					<br>
+					{% endfor %}
+				</div>
+			</main>
+		</div>
+	</body>
+</html>

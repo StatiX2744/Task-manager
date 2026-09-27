@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Tasks manager</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/sign_out" class="buttonBar">Se déconnecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+				<a href="/teams" class="buttonBar">Equipes</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<h1>
+					{{ Team.name }} :
+				</h1>
+                <h2>
+                    Créateur de l'équipe : <a href="{% url 'users' Team.createdBy.id %}">{{ Team.createdBy }}</a>
+                </h2>
+                <h2>Membres de l'équipe :</h2>
+				<ul>
+					{% for user in Members %}
+                    <li><a href="{% url 'users' user.id %}">{{ user }}</a></li>
+					{% endfor %}
+				</ul>
+                <h2>Tâches attitrées à l'équipe :</h2>
+                {% for task in Tasks %}
+                <div class="card">
+                    <div>Numéro de tâche : {{ task.0.id }}</div>
+                    <div>Titre : {{ task.0.title }}</div>
+                    <div>Créée par : <a href="{% url 'users' task.0.createdBy.id %}">{{ task.0.createdBy }}</a></div>
+                    <div>Tâche privée :{% if task.0.isPrivate == True %} Oui {% else %} Non {% endif %}</div>
+                    <div>Status de la tâche :{% if task.0.status == True %} Effectuée {% else %} Non effectuée {% endif %}</div>
+                    <div>Description : {{task.0.description}}</div>
+                    {% if task.0.parent.id is not None %}<div>Numéro de la tâche parente : {{task.0.parent.id}}</div> {% endif %}
+                    {% if task.0.status == False and task.1 == True%}<div><a href="{% url 'do_tasks' task.0.id %}">Effectuer la tâche</a></div>{% endif %}
+                </div>
+                <br>
+                {% endfor %}
+			</main>
+		</div>
+	</body>
+</html>

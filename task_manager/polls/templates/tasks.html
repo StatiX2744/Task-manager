@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Tasks manager</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/sign_out" class="buttonBar">Se déconnecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+				<a href="/teams" class="buttonBar">Equipes</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<div class="page-actions">
+					<a href="/tasks/create_tasks">Création des tâches</a>
+					<a href="/tasks/delete_tasks">Suppression des tâches</a>
+				</div>
+				<h1>
+					Tâches :
+				</h1>
+				<div class="card-list">
+					{% for task in myTasks %}
+					<div class="card">
+						<div>Numéro de tâche : {{ task.0.id }}</div>
+						<div>Titre : {{ task.0.title }}</div>
+						<div>Créée par : <a href="{% url 'users' task.0.createdBy.id %}">{{ task.0.createdBy }}</a></div>
+						<div>Tâche privée :{% if task.0.isPrivate == True %} Oui {% else %} Non {% endif %}</div>
+						<div>Status de la tâche :{% if task.0.status == True %} Effectuée {% else %} Non effectuée {% endif %}</div>
+						<div>Description : {{task.0.description}}</div>
+						{% if task.0.parent.id is not None %}<div>Numéro de la tâche parente : {{task.0.parent.id}}</div> {% endif %}
+						<div class="card-actions">
+						<a href="{% url 'task_inspect' task.0.id %}">Détails</a>
+						{% if task.1 == True %}<a href="{% url 'create_subtasks' task.0.id %}">Créer une sous-tâche</a>{% endif %}
+						{% if task.2 == True %}<a href="{% url 'update_tasks' task.0.id %}">Modifier</a>{% endif %}
+						{% if task.0.status == False and task.1 == True %}<a href="{% url 'do_tasks' task.0.id %}">Effectuer la tâche</a>{% endif %}
+						{% if task.0.status == True and task.1 == True %}<a href="{% url 'undo_tasks' task.0.id %}">Marquer non effectuée</a>{% endif %}
+						</div>
+					</div>
+					<br>
+					{% endfor %}
+				</div>
+			</main>
+		</div>
+	</body>
+</html>

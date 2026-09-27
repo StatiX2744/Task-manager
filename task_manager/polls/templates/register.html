@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/login" class="buttonBar">Login page</a>
+                <a href="/tasks" class="buttonBar">Tasks pages</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<h1>
+					S'inscrire' :
+				</h1>
+				<form method="POST">
+					{% csrf_token %} 
+					{{form.as_p}}
+					<br>
+					<input type="submit" value ="Register"/> 
+				</form>
+			</main>
+		</div>
+	</body>
+</html>

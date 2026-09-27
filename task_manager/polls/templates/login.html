@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Login</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/login" class="buttonBar">Se connecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<h1>
+					Se Connecter :
+				</h1>
+				<form method="POST" novalidate>
+					{% csrf_token %}
+					<!--{{form.messages.errors}}-->
+					{{form.as_p}}
+					<input type="submit" value="Login" />
+				</form>
+				<p>
+					<a href="/register">Je n'ai pas de compte :</a>
+				</p>
+			</main>
+		</div>
+	</body>
+</html>

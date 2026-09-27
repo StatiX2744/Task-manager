@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Users</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/sign_out" class="buttonBar">Se déconnecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+			</nav>
+		</header>
+        <main>
+            <div class="panel">
+				<h1>Informations sur l'utilisateur</h1>
+                <div>Nom d'utilisateur : {{user}}</div>
+                <div>Prénom : {{user.first_name}}</div>
+                <div>Nom : {{user.last_name}}</div>
+                <div>Numero de l'utilisateur : {{user.id}}</div>
+            </div>
+			<div class="panel">
+				<h1>Tâches créées par cet utilisateur visibles par vous</h1>
+				{% for task in userTasks %}
+				<div class="card">
+					<div>Numéro de tâche : {{ task.id }}</div>
+					<div>Titre : {{ task.title }}</div>
+					<div>Tâche privée :{% if task.isPrivate == True %} Oui {% else %} Non {% endif %}</div>
+					<div>Status de la tâche :{% if task.status == True %} Effectuée {% else %} Non effectuée {% endif %}</div>
+					<div>Description : {{task.description}}</div>
+					{% if task.parent.id is not None %}<div>Numéro de la tâche parente : {{task.parent.id}}</div> {% endif %}
+					<a href="{% url 'task_inspect' task.id %}">Détails</a>
+				</div>
+				<br>
+				{% endfor %}
+			</div>
+        </main>
+	</body>
+</html>

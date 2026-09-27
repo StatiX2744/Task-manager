@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Tasks manager</title>
+		{% load static %}
+		<link rel="stylesheet" type="text/css" href="{% static 'general.css' %}">
+	</head>
+	<body>
+		<header>
+			<nav>
+				<a href="/sign_out" class="buttonBar">Se déconnecter</a>
+                <a href="/tasks" class="buttonBar">Tâches</a>
+				<a href="/teams" class="buttonBar">Equipes</a>
+			</nav>
+		</header>
+		<div>
+			<main>
+				<div class="card">
+                    <h1>Titre : {{ task.0.title }}</h1>
+					<div>
+						<div>Numéro de tâche : {{ task.0.id }}</div>
+						<div>Créée par : <a href="{% url 'users' task.0.createdBy.id %}">{{ task.0.createdBy }}</a></div>
+						<div>Tâche privée :{% if task.0.isPrivate == True %} Oui {% else %} Non {% endif %}</div>
+						<div>Status de la tâche :{% if task.0.status == True %} Effectuée {% else %} Non effectuée {% endif %}</div>
+						<div>Description : {{task.0.description}}</div>
+						{% if task.0.parent.id is not None %}<div>Numéro de la tâche parente : {{task.0.parent.id}}</div> {% endif %}
+						<div class="card-actions">
+						<a href="{% url 'task_inspect' task.0.id %}">Détails</a>
+						{% if task.1 == True %}<a href="{% url 'create_subtasks' task.0.id %}">Créer une sous-tâche</a>{% endif %}
+						{% if task.0.status == False and task.1 == True %}<a href="{% url 'do_tasks' task.0.id %}">Effectuer la tâche</a>{% endif %}
+						</div>
+					</div>
+					<br>
+                    <h1>Utilisateurs assignés à cette tâche :</h1>
+                    {% for user in Assigned_users %}
+                    <ul>
+                        <li><a href="{% url 'users' user.id %}">{{ user }}</a></li>
+                    </ul>
+                    {% endfor %}
+                    <h1>Équipes assignées à cette tâche :</h1>
+                    {% for team in Assigned_teams %}
+                    <ul>
+                        <li><a href="{% url 'team_inspect' team.name %}">{{ team.name }}</a></li>
+                    </ul>
+                    {% endfor %}
+				</div>
+			</main>
+		</div>
+	</body>
+</html>
